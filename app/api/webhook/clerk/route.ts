@@ -1,7 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { createUser, deleteUser, updateUser } from "@/lib/action/user.action";
+import { createUser, deleteUser, updateUser } from "@/lib/action/user.actions";
 import { clerkClient } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -77,8 +77,8 @@ export async function POST(req: Request) {
           userId: newUser._id, //把clerk的帳號id，覆蓋至Database的用戶id。
         },
       });
-      return NextResponse.json({ message: "OK", user: newUser });
     }
+    return NextResponse.json({ message: "OK", user: newUser });
   }
 
   //更新帳號
@@ -96,7 +96,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ message: "OK", user: updatedUser });
   }
-  
+
   //刪除帳號
   if (eventType === "user.deleted") {
     const { id } = evt.data;

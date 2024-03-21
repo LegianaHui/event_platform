@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 
-const MONGODB_URL = process.env.MONGODB_URL;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 //初始化
 //如果沒有找到mongodb的全域屬性，將連線和設定為「空值」。
@@ -12,12 +12,12 @@ let cached = (global as any).mongoose || { conn: null, promise: null };
 export const connectToDatabase = async () => {
   if (cached.conn) return cached.conn; //緩存是否已經連接Database?
 
-  if (!MONGODB_URL) throw new Error("遺缺MONGODB_URL");
+  if (!MONGODB_URI) throw new Error("遺缺MONGODB_UR");
 
   //緩存連接到現有的Database，或者創建新的Database。
   cached.promise =
     cached.promise ||
-    mongoose.connect(MONGODB_URL, {
+    mongoose.connect(MONGODB_URI, {
       dbName: "evently",
       bufferCommands: false, //禁止緩衝，與相關的所有型號連接
     });
